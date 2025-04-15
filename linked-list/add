@@ -1,0 +1,40 @@
+#! /bin/bash
+
+set -e
+
+if [ ! $# -eq 2 ]
+then
+	echo "add <dir> <data>"
+	exit 1
+
+fi
+
+dir=$1
+data=$2
+
+if [ ! -d $dir ]
+then
+
+	echo "$dir belum terbuat, jalankan init dulu"
+	exit 1
+
+fi
+
+cd $dir
+
+folder=$( uuidgen -t )
+mkdir $folder
+
+cd "$folder"
+echo "tail" >  next
+
+echo $data > value
+cd ..
+
+cd tail
+folderAwal=$(cat prev)
+echo "$folder" > prev
+cd ..
+
+cd "$folderAwal"
+echo "$folder" > next

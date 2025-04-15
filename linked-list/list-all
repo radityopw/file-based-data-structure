@@ -1,0 +1,46 @@
+#! /bin/bash
+
+set -e
+
+if [ ! $# -eq 1 ]
+then
+	echo "add <dir>"
+	exit 1
+
+fi
+
+dir=$1
+
+if [ ! -d $dir ]
+then
+
+	echo "$dir belum terbuat, jalankan init dulu"
+	exit 1
+
+fi
+
+cd $dir
+
+folder="head"
+cd $folder
+echo $folder
+
+while [ -f next ]
+do
+
+	folder=$(cat next)
+	cd ..
+	cd $folder
+
+	echo $folder
+
+	if [ $folder = "tail" ]
+	then
+
+		break
+
+	fi
+
+	cat value
+
+done

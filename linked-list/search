@@ -1,0 +1,49 @@
+#! /bin/bash
+
+set -e
+
+if [ ! $# -eq 2 ]
+then
+	echo "search <dir> <key>"
+	exit 1
+
+fi
+
+dir=$1
+key=$2
+
+if [ ! -d $dir ]
+then
+
+	echo "$dir belum terbuat, jalankan init dulu"
+	exit 1
+
+fi
+
+cd $dir
+
+folder="head"
+cd $folder
+
+while [ -f next ]
+do
+
+	folder=$(cat next)
+	cd ..
+	cd $folder
+
+	if [ $folder = "tail" ]
+	then
+
+		break
+
+	fi
+
+	if [ $key = $(cat value) ]
+	then
+
+		echo $folder
+
+	fi
+
+done

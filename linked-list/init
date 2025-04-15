@@ -1,0 +1,26 @@
+#! /bin/bash
+
+set -e
+
+if [ ! $# -eq 1 ]
+then
+	echo "init <dir>"
+	exit 1
+
+fi
+
+dir=$1
+
+mkdir "$dir"
+
+cd "$dir"
+
+mkdir head
+mkdir tail
+
+cd head
+echo "tail" > next
+cd ..
+
+cd tail
+echo "head" > prev

@@ -1,0 +1,64 @@
+#! /bin/bash
+
+set -e
+
+if [ ! $# -eq 2 ]
+then
+	echo "delete <dir> <key>"
+	exit 1
+
+fi
+
+dir=$1
+key=$2
+
+if [ ! -d $dir ]
+then
+
+	echo "$dir belum terbuat, jalankan init dulu"
+	exit 1
+
+fi
+
+cd $dir
+
+folderAwal=""
+folder="head"
+cd $folder
+
+while [ -f next ]
+do
+
+	folderAwal=$folder
+	folder=$(cat next)
+	cd ..
+	cd $folder
+
+	if [ $folder = "tail" ]
+	then
+
+		break
+
+	fi
+
+	if [ $key = $(cat value) ]
+	then
+
+		next=$(cat next)
+		cd ..
+		cd $folderAwal
+		echo $next > next
+		cd ..
+		rm -rf $folder
+		cd $next
+
+		if [ $next = "tail" ]
+		then
+
+			echo $folderAwal > prev
+
+		fi
+
+		break
+	fi
+done
